@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-  <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{b9863147-6250-4a6a-92d4-3a12c70f5aa9}" Title="ATM_Navigator" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="ATM_Navigator author" Description="Sample description" Publisher="ATM_Navigator" PublisherID="{a4711b22-2533-434c-9d1e-73eb5330ca87}">
+  <DefaultLanguage xmlns="" code="ru" />
+  <App xmlns="" ProductID="{b9863147-6250-4a6a-92d4-3a12c70f5aa9}" Title="ATM Navigator" RuntimeType="Silverlight" Version="13.0.0.0" Genre="apps.normal" Author="ATM_Navigator author" Description="" Publisher="ATM Navigator" PublisherID="{a4711b22-2533-434c-9d1e-73eb5330ca87}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -18,10 +18,10 @@
     <Tokens>
       <PrimaryToken TokenID="ATM_NavigatorToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\IconTileSmall.png</SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>ATM_Navigator</Title>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\IconTileMedium.png</BackgroundImageURI>
+          <Title>ATM Navigator</Title>
           <BackContent>
           </BackContent>
           <BackBackgroundImageURI>

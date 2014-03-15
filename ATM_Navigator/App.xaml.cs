@@ -8,11 +8,12 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ATM_Navigator.Resources;
 using System.Windows.Media;
+using ATM_Navigator.ViewModel;
 
 namespace ATM_Navigator
 {
     public partial class App : Application
-    {
+    {       
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -57,7 +58,7 @@ namespace ATM_Navigator
             }
 
             (App.Current.Resources["PhoneRadioCheckBoxPressedBrush"] as SolidColorBrush).Color = Color.FromArgb(200, 150, 150, 150);
-            (App.Current.Resources["PhoneAccentBrush"] as SolidColorBrush).Color = Color.FromArgb(200, 150, 150, 150);
+            (App.Current.Resources["PhoneAccentBrush"] as SolidColorBrush).Color = Color.FromArgb(200, 150, 150, 150);                   
         }
 
         // Code to execute when the application is launching (eg, from Start)

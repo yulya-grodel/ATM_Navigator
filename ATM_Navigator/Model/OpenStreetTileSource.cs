@@ -6,17 +6,30 @@ using System.Threading.Tasks;
 
 namespace ATM_Navigator.Model
 {
-    public class OpenStreetTileSource : Microsoft.Phone.Maps.Controls.TileSource
+    public class CustomTileSource : Microsoft.Phone.Maps.Controls.TileSource
     {
-        public OpenStreetTileSource()
+        private Dictionary<string, string> mapTypesDictionary = new Dictionary<string, string>() { { "Open Streen Map", @"http://{0}.tile.openstreetmap.org/{1}/{2}/{3}.png" }, 
+                                                                                                   { "Google Map", @"http://mt{0}.google.com/vt/lyrs=m&z={1}&x={2}&y={3}" } };
+
+        //@"http://mt{0}.google.com/vt/lyrs={1}&z={2}&x={3}&y={4}"
+        //@"http://khm{0}.google.com/kh/v=62&x={1}&y={2}&z={3}&s="
+
+        public CustomTileSource(string uriFormatKey)
         {
-            UriFormat = @"http://{0}.tile.openstreetmap.org/{1}/{2}/{3}.png";
+            if (string.IsNullOrEmpty(uriFormatKey))
+            {
+                UriFormat = mapTypesDictionary["Open Streen Map"];
+            }
+            else
+            {
+                UriFormat = mapTypesDictionary[uriFormatKey];
+            }
             _rand = new Random();
         }
 
         private readonly Random _rand;
         private readonly static string[] TilePathPrefixes = new[] { "a", "b", "c" };
-
+        
         private string Server
         {
             get

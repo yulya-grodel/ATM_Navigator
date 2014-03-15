@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ using ATM_Navigator.Model;
 
 namespace ATM_Navigator.ViewModel
 {
+    [DataContract]
     public class ATMListPageViewModel
     {
         public List<ATM> ATMList
@@ -28,7 +30,7 @@ namespace ATM_Navigator.ViewModel
                 }
             }
         }
-
+              
         private List<ATM> PopulateATMList()
         {
             var list = new List<ATM>

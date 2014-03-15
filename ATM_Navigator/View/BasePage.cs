@@ -12,39 +12,51 @@ namespace ATM_Navigator.View
     {
         protected virtual void btnATM_Click(object sender, EventArgs e)
         {
+            NavigationService.RemoveBackEntry();
             NavigationService.Navigate(new Uri("/View/ATMListPage.xaml", UriKind.Relative));
         }
 
         protected virtual void btnFilter_Click(object sender, EventArgs e)
         {
+            NavigationService.RemoveBackEntry();
             NavigationService.Navigate(new Uri("/View/FiltersListPage.xaml", UriKind.Relative));
         }
 
         protected virtual void btnInfo_Click(object sender, EventArgs e)
         {
+            NavigationService.RemoveBackEntry();
             NavigationService.Navigate(new Uri("/View/InformationPage.xaml", UriKind.Relative));
         }
 
         protected virtual void btnMap_Click(object sender, EventArgs e)
         {
+            NavigationService.RemoveBackEntry();
             NavigationService.Navigate(new Uri("/View/MainPage.xaml", UriKind.Relative));
         }
 
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        protected virtual void btnSettings_Click(object sender, EventArgs e)
         {
-           // base.OnBackKeyPress(e);            
-           // e.Cancel = true;
-          //  NavigationService.Navigate(new Uri("/View/MainPage.xaml", UriKind.Relative));
+            NavigationService.RemoveBackEntry();
+            NavigationService.Navigate(new Uri("/View/SettingsPage.xaml", UriKind.Relative));
         }
 
         public void SaveApplicationSettings(string key, object value)
         {
+            var settings = IsolatedStorageSettings.ApplicationSettings;            
+            settings[key] = value;
+            settings.Save();            
+        }
+
+        public bool TryGetApplicationSettings(string key, out object value)
+        {
             var settings = IsolatedStorageSettings.ApplicationSettings;
             if (settings.Contains(key))
             {
-                settings[key] = value;
-                settings.Save();
+                value = settings[key];
+                return true;                
             }
+            value = null;
+            return false;
         }
     }
 }

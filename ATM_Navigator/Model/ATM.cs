@@ -13,23 +13,23 @@ namespace ATM_Navigator.Model
     {
         public ATM(string pictureUrl, string name, string identifier, bool isChecked)
         {
-            this.PictureUrl = pictureUrl;
+            //this.PictureUrl = pictureUrl;
             this.Name = name;
             this.Identifier = identifier;
             this.IsChecked = isChecked;
         }
 
-        private string pictureUrl;
-        [DataMember]
-        public string PictureUrl
-        {
-            get { return pictureUrl; }
-            set
-            {
-                pictureUrl = value;
-                OnPropertyChanged("PictureUrl");
-            }
-        }
+        //private string pictureUrl;
+        //[DataMember]
+        //public string PictureUrl
+        //{
+        //    get { return pictureUrl; }
+        //    set
+        //    {
+        //        pictureUrl = value;
+        //        OnPropertyChanged("PictureUrl");
+        //    }
+        //}
 
         private string name;
         [DataMember]

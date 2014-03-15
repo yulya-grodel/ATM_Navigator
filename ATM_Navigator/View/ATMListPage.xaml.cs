@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -19,7 +20,8 @@ namespace ATM_Navigator.View
         public ATMListPage()
         {
             InitializeComponent();
-            DataContext = new ATMListPageViewModel();      
+            DataContext = new ATMListPageViewModel();
+            AtmListBox.LayoutUpdated += listBox_LayoutUpdated;
         }
 
         protected override void btnATM_Click(object sender, EventArgs e)
@@ -46,63 +48,59 @@ namespace ATM_Navigator.View
             base.btnMap_Click(sender, e);
         }
 
+        protected override void btnSettings_Click(object sender, EventArgs e)
+        {
+            SaveApplicationSettings();
+            base.btnSettings_Click(sender, e);
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            SaveApplicationSettings();
+            NavigationService.RemoveBackEntry();
+            NavigationService.Navigate(new Uri("/View/MainPage.xaml", UriKind.Relative));
+            // base.OnBackKeyPress(e);
+        }
+
         private void SaveApplicationSettings()
         {
-            base.SaveApplicationSettings("ATMList", (this.DataContext as ATMListPageViewModel).ATMList);
-        }
+            base.SaveApplicationSettings("ATMList", (this.DataContext as ATMListPageViewModel).ATMList);         
+        }      
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;            
-            if (listBox.SelectedItem!=null)
+            if (AtmListBox.SelectedItem != null)
             {
-                (listBox.SelectedItem as ATM).IsChecked = !(listBox.SelectedItem as ATM).IsChecked;
-                if (listBox.SelectedIndex == 0)
-                {
-                    if ((listBox.SelectedItem as ATM).IsChecked == true)
-                    {
-                        for (int i = 1; i < listBox.Items.Count(); i++)
-                            (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).IsEnabled = false;       
-                    }
-                    else
-                    {
-                        for (int i = 1; i < listBox.Items.Count(); i++)
-                            (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).IsEnabled = true;
-                    }
-                }
+                (AtmListBox.SelectedItem as ATM).IsChecked = !(AtmListBox.SelectedItem as ATM).IsChecked;              
                 (sender as ListBox).SelectedIndex = -1;
             }
         }
 
+        private void listBox_LayoutUpdated(object sender, EventArgs e)
+        {                   
+            for (int i = 1; i < AtmListBox.Items.Count(); i++)
+            {
+                if (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) != null)
+                {
+                    (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).IsEnabled = !(AtmListBox.Items[0] as ATM).IsChecked;
+                }
+            }            
+        }
+
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            var cb = sender as CheckBox;
-            //if (cb != null)
-            //{
-            //    var selectedItem = cb.DataContext;
-            //    if ((selectedItem as ATM).Name == "Все банки")
-            //    {
-            //        if (!(selectedItem as ATM).IsChecked)
-            //        {
-            //            for (int i = 1; i < AtmListBox.Items.Count(); i++)
-            //            {
-            //                if (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) != null)
-            //                {
-            //                    (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).IsEnabled = false;
-            //                }
-            //                else
-            //                {
-            //                    int qw = 12345;
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            for (int i = 1; i < AtmListBox.Items.Count(); i++)
-            //                (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).IsEnabled = true;  
-            //        }
-            //    }
-            //}
-        }               
+            SetListBoxItemsEnability((bool)(sender as CheckBox).IsChecked);             
+        }
+
+        private void SetListBoxItemsEnability(bool isChecked)
+        {  
+            for (int i = 1; i < AtmListBox.Items.Count(); i++)
+            {
+                if (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) == null) break;
+                (AtmListBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).IsEnabled = !isChecked;
+            }            
+        }
+
+    
     }
 }

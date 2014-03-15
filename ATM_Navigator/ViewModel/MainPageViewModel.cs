@@ -23,7 +23,7 @@ namespace ATM_Navigator.ViewModel
 {
     public class MainPageViewModel : BaseViewModel
     {        
-        private int zoomLevel = 16;
+        private int zoomLevel = 15;
         public int ZoomLevel
         {
             get { return zoomLevel; }
@@ -57,44 +57,43 @@ namespace ATM_Navigator.ViewModel
         
         private void OnZoomInCommand()
         {
-            ZoomLevel+=1;
+            ZoomLevel = Math.Min(ZoomLevel + 1, 20);
         }
 
         private void OnZoomOutCommand()
         {
-            ZoomLevel-=1;
+            ZoomLevel= Math.Max(ZoomLevel -1, 1);
         }
 
         public string ComposeUri()
         {
             var strBuilder = new StringBuilder("http://atmnav-server.appspot.com/?");
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("ATMList"))
-            {
-                var list = (List<ATM>)IsolatedStorageSettings.ApplicationSettings["ATMList"];
-                if (list != null)
-                {
-                    foreach (var item in list.Where(t => t.IsChecked).Select(t => t.Identifier))
-                    {
-                        strBuilder.AppendFormat("filters[]={0}", item);
-                        strBuilder.Append("&");
-                    }
-                }
-            }
             if (IsolatedStorageSettings.ApplicationSettings.Contains("FiltersList"))
             {
                 var list = (List<Filter>)IsolatedStorageSettings.ApplicationSettings["FiltersList"];
                 if (list != null)
                 {
                     foreach (var item in list.Where(t => t.IsChecked).Select(t => t.Identifier))
-                    {
+                    {                       
+                        strBuilder.AppendFormat("filters[]={0}", item);
+                        strBuilder.Append("&");
+                    }
+                }
+            }            
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("ATMList"))
+            {
+                var list = (List<ATM>)IsolatedStorageSettings.ApplicationSettings["ATMList"];
+                if (list != null)
+                {
+                    foreach (var item in list.Where(t => t.IsChecked).Select(t => t.Identifier))
+                    {                        
                         strBuilder.AppendFormat("objects[]={0}", item);
                         strBuilder.Append("&");
                     }
                 }
             }
-            var result = strBuilder.ToString().Remove(strBuilder.Length - 1, 1);
-           // return "http://atmnav-server.appspot.com/?filters[]=type:bank&filters[]=type:terminal&objects[]=belarus&objects[]=prior";
-            return "http://atmnav-server.appspot.com/?filters[]=type:bank&filters[]=type:terminal&objects[]=spec:all";
+            var result = strBuilder.ToString();
+            return result.EndsWith("&") ? result.Remove(result.Length -1, 1) : result;                    
         }
 
         public Dictionary<string, string> AtmMappingDictionary = new Dictionary<string, string>()

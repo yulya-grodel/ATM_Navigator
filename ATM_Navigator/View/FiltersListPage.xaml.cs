@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -23,13 +24,7 @@ namespace ATM_Navigator.View
         {
             SaveApplicationSettings();
             base.btnATM_Click(sender, e);
-        }
-
-        protected override void btnFilter_Click(object sender, EventArgs e)
-        {
-            SaveApplicationSettings();
-            base.btnFilter_Click(sender, e);
-        }
+        }              
 
         protected override void btnInfo_Click(object sender, EventArgs e)
         {
@@ -41,7 +36,21 @@ namespace ATM_Navigator.View
         {
             SaveApplicationSettings();
             base.btnMap_Click(sender, e);
-        }               
+        }
+
+        protected override void btnSettings_Click(object sender, EventArgs e)
+        {
+            SaveApplicationSettings();
+            base.btnSettings_Click(sender, e);
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            SaveApplicationSettings();
+            NavigationService.RemoveBackEntry();
+            NavigationService.Navigate(new Uri("/View/MainPage.xaml", UriKind.Relative));
+            // base.OnBackKeyPress(e);
+        }
 
         private void SaveApplicationSettings()
         {

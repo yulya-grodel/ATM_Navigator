@@ -15,8 +15,9 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True"
-    OrientationChanged="BasePage_OrientationChanged">   
+    shell:SystemTray.IsVisible="False"
+    OrientationChanged="BasePage_OrientationChanged"
+    Name="mainPage">   
     <view:BasePage.Resources>
         <ControlTemplate x:Key="PushpinControlTemplate" TargetType="toolkit:Pushpin">
             <Grid x:Name="ContentGrid" Width="32" Height="32" Margin="0">
@@ -29,34 +30,43 @@
        <Grid.RowDefinitions>
            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>       
+        </Grid.RowDefinitions>
+        <!--<ProgressBar x:Name="progressbar" IsIndeterminate="True"/>-->
         <maps:Map Grid.RowSpan="2" x:Name="Map"                  
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                    ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}"                  
                    CartographicMode="Road"
                    ColorMode="Dark"
                    PedestrianFeaturesEnabled="True"
-                   LandmarksEnabled="True">
+                   LandmarksEnabled="True">           
         </maps:Map>
         <StackPanel x:Name="ZoomPanel" Orientation="Vertical" VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right">
-            <Button x:Name="ZoomInBtn" BorderThickness="0" Content=" + " FontWeight="Bold" FontSize="28"
-                    VerticalAlignment="Bottom"  Background="DimGray" Opacity="0.6"
-                    Command="{Binding ZoomInCommand}"></Button>
-            <Button x:Name="ZoomOutBtn" BorderThickness="0" Content=" - " FontWeight="Bold" FontSize="28"
-                    VerticalAlignment="Bottom" Background="DimGray" Opacity="0.6"
-                    Command="{Binding ZoomOutCommand}" Margin="0, 0, 0, 80"></Button>
+            <Button x:Name="ZoomInBtn" BorderThickness="0"
+                    VerticalAlignment="Bottom" Background="DimGray" Opacity="0.7"
+                    Command="{Binding ZoomInCommand}" 
+                    Width="80" Height=" 80">               
+                    <Image Source="/Assets\Add.png"></Image>               
+            </Button>
+            <Button x:Name="ZoomOutBtn" BorderThickness="0"
+                    VerticalAlignment="Bottom" Background="DimGray" Opacity="0.7"
+                    Command="{Binding ZoomOutCommand}" Margin="0, -10, 0, 80" 
+                    Width="80" Height="80">              
+                    <Image Source="/Assets\Remove.png"></Image>              
+            </Button>
         </StackPanel>
     </Grid>
+    
     <phone:PhoneApplicationPage.ApplicationBar>        
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Opacity="0.5" ForegroundColor="AliceBlue">
-            <shell:ApplicationBarIconButton x:Name="btnMap" IconUri="/Assets\appBarIcons\map.png" Text="Карта" Click="btnMap_Click"/>
+        <shell:ApplicationBar IsMenuEnabled="True" Opacity="0.7" ForegroundColor="AliceBlue" BackgroundColor="DimGray">
+            <shell:ApplicationBarIconButton x:Name="btnMap" IconUri="/Assets\appBarIcons\map.png" Text="Карта"/>
             <shell:ApplicationBarIconButton x:Name="btnATM" IconUri="/Assets\appBarIcons\objects.png" Text="Банки" Click="btnATM_Click"/>
             <shell:ApplicationBarIconButton x:Name="btnFilter" IconUri="/Assets\appBarIcons\filters.png" Text="Фильтры" Click="btnFilter_Click"/>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Вернуться в центр" Click="btnInfo_Click"/>
-                <shell:ApplicationBarMenuItem Text="О программе"/>
+                <shell:ApplicationBarMenuItem Text="О программе" Click="btnInfo_Click"/>
+                <shell:ApplicationBarMenuItem Text="Настройки" Click="btnSettings_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+    
 </view:BasePage>

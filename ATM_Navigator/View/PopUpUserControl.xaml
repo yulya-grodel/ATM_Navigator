@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="ATM_Navigator.View.PopUpUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"   
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Width="480" Height="320">
+    <StackPanel x:Name="LayoutRoot" Width="480" Height="320"
+                Background="DimGray" Opacity="0.85">
+        <TextBlock Margin="10" Foreground="White" TextWrapping="Wrap" FontSize="24"
+                   Text="ATM навигатор использует данные о вашем местоположении для отображения их на карте.
+                         Приложение не сохраняет никаких данных, пока вы используете программу.
+                         Вы всегда можете отключить эту функцию в Настройках.">            
+        </TextBlock>
+        <Button Foreground="White" x:Name="btnOK" Margin="3" Content="OK" BorderBrush="White"/>       
+    </StackPanel>
+</UserControl>
